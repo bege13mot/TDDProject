@@ -4,7 +4,7 @@ services:
 
   users-db:
     container_name: users-db
-    build: ./project/db
+    build: ../flask-microservices-users/project/db
     ports:
         - 5435:5432  # expose ports - HOST:CONTAINER
     environment:
@@ -14,11 +14,10 @@ services:
       test: exit 0
 
   users-service:
-    #command: gunicorn -b 0.0.0.0:5000 manage:app
     container_name: users-service
-    build: ./
-    expose:
-      - '5000'
+    build: ../flask-microservices-users
+    ports:
+      - 5001:5000 # expose ports - HOST:CONTAINER
     environment:
       - APP_SETTINGS=project.config.DevelopmentConfig
       - DATABASE_URL=postgres://postgres:postgres@users-db:5432/users_dev
