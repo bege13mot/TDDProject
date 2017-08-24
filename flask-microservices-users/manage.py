@@ -1,3 +1,6 @@
+# manage.py
+
+
 import unittest
 import coverage
 
@@ -11,9 +14,7 @@ COV = coverage.coverage(
     branch=True,
     include='project/*',
     omit=[
-        'project/tests/*',
-        'project/server/config.py',
-        'project/server/*/__init__.py'
+        'project/tests/*'
     ]
 )
 COV.start()
@@ -55,6 +56,7 @@ def recreate_db():
     db.drop_all()
     db.create_all()
     db.session.commit()
+
 
 @manager.command
 def seed_db():
