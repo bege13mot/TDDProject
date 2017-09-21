@@ -1,4 +1,4 @@
-FROM node:latest
+FROM node:6.11.2
 
 # set working directory
 RUN mkdir /usr/src/app
@@ -15,7 +15,9 @@ ENV REACT_APP_USERS_SERVICE_URL=$REACT_APP_USERS_SERVICE_URL
 
 # install and cache app dependencies
 ADD package.json /usr/src/app/package.json
-RUN npm install
+#RUN rm -rf node_modules
+#RUN npm cache clear --force
+RUN npm install npm@3.10.10
 RUN npm install pushstate-server -g
 
 # add app

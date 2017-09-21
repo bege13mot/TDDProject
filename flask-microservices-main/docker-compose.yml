@@ -48,7 +48,7 @@ services:
       context: ../flask-microservices-client
       args:
         - NODE_ENV=development
-        - REACT_APP_USERS_SERVICE_URL=${REACT_APP_USERS_SERVICE_URL}
+        - REACT_APP_USERS_SERVICE_URL=http://127.0.0.1
     ports:
       - '9000:9000' # expose ports - HOST:CONTAINER
     depends_on:
