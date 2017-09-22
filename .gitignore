@@ -2,6 +2,7 @@
 
 # dependencies
 /flask-microservices-client/node_modules
+/flask-microservices-client/build
 
 # testing
 /coverage

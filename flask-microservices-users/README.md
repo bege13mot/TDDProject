@@ -91,4 +91,6 @@ My machine:
 (env)$ set DATABASE_URL=postgres://postgres:postgres@localhost:5435/users_dev
 (env)$ set DATABASE_TEST_URL=postgres://postgres:postgres@localhost:5435/users_test
 
-set REACT_APP_USERS_SERVICE_URL=http://127.0.0.1
+set REACT_APP_USERS_SERVICE_URL=http://192.168.99.100
+
+docker-compose up -d --build
