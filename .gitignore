@@ -3,6 +3,7 @@
 # dependencies
 /flask-microservices-client/node_modules
 /flask-microservices-client/build
+/flask-microservices-users/migrations
 
 # testing
 /coverage

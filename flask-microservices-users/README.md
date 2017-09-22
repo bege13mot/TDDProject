@@ -81,6 +81,8 @@ $ docker rmi $(docker images -q)
 For windows:
 ```
 python -m venv env
+mkvirtualenv env-name
+workon
 
 .\env\Scripts\activate.bat
 ```
@@ -92,5 +94,6 @@ My machine:
 (env)$ set DATABASE_TEST_URL=postgres://postgres:postgres@localhost:5435/users_test
 
 set REACT_APP_USERS_SERVICE_URL=http://192.168.99.100
+set REACT_APP_USERS_SERVICE_URL=http://127.0.0.1
 
 docker-compose up -d --build
