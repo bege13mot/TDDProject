@@ -21,11 +21,11 @@ env:
   global:
     - DOCKER_COMPOSE_VERSION=1.14.0
     - COMMIT=${TRAVIS_COMMIT::8}
-    - USERS = flask-microservices-users
-    - USERS_DB = flask-microservices-users_db
-    - CLIENT = flask-microservices-client
-    - SWAGGER = flask-microservices-swagger
-    - NGINX = flask-microservices-nginx
+    - USERS=flask-microservices-users
+    - USERS_DB=flask-microservices-users_db
+    - CLIENT=flask-microservices-client
+    - SWAGGER=flask-microservices-swagger
+    - NGINX=flask-microservices-nginx
 
 before_install:
   - sudo rm /usr/local/bin/docker-compose
