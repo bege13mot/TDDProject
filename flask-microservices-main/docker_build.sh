@@ -1,6 +1,6 @@
-#!/bin/sh
+#!/bin/bash
 
-docker login -u $DOCKER_PASS -p $DOCKER_PASS
+docker login -u $DOCKER_USER -p $DOCKER_PASS
 docker pull $DOCKER_ID/$USERS
 docker pull $DOCKER_ID/$USERS_DB
 docker pull $DOCKER_ID/$CLIENT
