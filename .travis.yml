@@ -35,16 +35,14 @@ before_script:
   - sh -e /etc/init.d/xvfb start
   - sleep 3
   - cd ./flask-microservices-main
-  #- fluxbox >/dev/null 2>&1 &
+  - fluxbox >/dev/null 2>&1 &
+  - npm install
   - docker-compose up -d --build
 
 script:
   - docker-compose run users-service python manage.py test
-  - docker-compose run users-service python manage.py recreate_db
-  - npm test
-  - fluxbox >/dev/null 2>&1 &
-  - npm run-script testcafe chrome e2e/index.test.js
-  #- testcafe
+  - docker-compose run users-service python manage.py recreate_db  
+  - testcafe chrome e2e/index.test.js  
   #- testcafe chrome e2e/index.test.js
 
 after_script:

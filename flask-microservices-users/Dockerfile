@@ -8,7 +8,7 @@ WORKDIR /usr/src/app
 ADD ./requirements.txt /usr/src/app/requirements.txt
 
 # install requirements
-RUN pip install -r requirements.txt
+RUN pip install -r requirements.txt --quiet
 
 # add app
 ADD . /usr/src/app
