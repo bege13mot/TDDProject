@@ -22,6 +22,7 @@ COPY . /usr/src/app
 #RUN npm cache clear --force
 RUN npm install react react-dom react-scripts web-service -g --silent --save
 RUN npm install pushstate-server -g --silent
+RUN npm install
 
 # add `/usr/src/app/node_modules/.bin` to $PATH
 #ENV PATH /usr/src/app/node_modules/.bin:$PATH
