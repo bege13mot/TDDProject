@@ -4,9 +4,6 @@ FROM node:latest
 RUN mkdir /usr/src/app
 WORKDIR /usr/src/app
 
-# add `/usr/src/app/node_modules/.bin` to $PATH
-ENV PATH /usr/src/app/node_modules/.bin:$PATH
-
 # add environment variables
 ARG REACT_APP_USERS_SERVICE_URL
 ARG NODE_ENV
@@ -20,9 +17,11 @@ ADD package.json /usr/src/app/package.json
 #RUN npm install npm@3.10.10
 #RUN rm -rf node_modules
 #RUN npm cache clear --force
-RUN npm install react react-dom react-scripts web-service -g --silent
+RUN npm install react react-dom react-scripts web-service -g --silent --save
 RUN npm install pushstate-server -g --silent
 
+# add `/usr/src/app/node_modules/.bin` to $PATH
+#ENV PATH /usr/src/app/node_modules/.bin:$PATH
 
 # add app
 ADD . /usr/src/app
