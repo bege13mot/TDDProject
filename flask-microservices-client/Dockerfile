@@ -15,8 +15,8 @@ ENV REACT_APP_USERS_SERVICE_URL=$REACT_APP_USERS_SERVICE_URL
 
 # install and cache app dependencies
 ADD package.json /usr/src/app/package.json
-#RUN rm -rf node_modules
-#RUN npm cache clear --force
+RUN rm -rf node_modules
+RUN npm cache clear --force
 #RUN npm install npm@3.10.10
 RUN npm install npm --silent
 RUN npm install pushstate-server -g
