@@ -18,11 +18,7 @@ ADD package.json /usr/src/app/package.json
 #RUN rm -rf node_modules
 #RUN npm cache clear --force
 #RUN npm install npm@3.10.10
-#RUN npm install npm --silent
-
-RUN npm install -g npm@latest
-RUN rm -rf node_modules
-RUN install
+RUN npm install npm --silent
 RUN npm install pushstate-server -g
 
 # add app
