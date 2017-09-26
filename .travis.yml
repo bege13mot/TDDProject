@@ -42,9 +42,9 @@ before_script:
   - sleep 3
   - cd ./flask-microservices-main
   - fluxbox >/dev/null 2>&1 &
-  - npm install
-  #- bash ./docker_build.sh
-  - docker-compose up -d --build
+  - npm install --silent
+  - bash ./docker_build.sh
+  #- docker-compose up -d --build
 
 script:
   - docker-compose run users-service python manage.py test
@@ -55,4 +55,5 @@ after_script:
   - docker-compose down
 
 after_success:
+  - export TAG=`if [ "$TRAVIS_BRANCH" == "master" ]; then echo "latest"; else echo $TRAVIS_BRANCH ; fi`
   - bash ./docker_push.sh
