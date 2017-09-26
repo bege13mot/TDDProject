@@ -12,7 +12,7 @@ addons:
     sources:
      - google-chrome
     packages:
-     - google-chrome-stable
+     - google-chrome-stable fluxbox
 
 services:
   - docker
@@ -41,12 +41,11 @@ before_script:
 script:
   - docker-compose run users-service python manage.py test
   - docker-compose run users-service python manage.py recreate_db
+  - npm test
+  - fluxbox >/dev/null 2>&1 &
+  - npm run-script testcafe chrome e2e/index.test.js
   #- testcafe
   #- testcafe chrome e2e/index.test.js
 
 after_script:
   - docker-compose down
-
-after_success:
-  - bash ./docker_push.sh
-  - bash ./deploy_heroku.sh
