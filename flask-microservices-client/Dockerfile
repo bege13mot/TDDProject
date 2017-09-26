@@ -1,4 +1,4 @@
-FROM node:6.11.2
+FROM node:latest
 
 # set working directory
 RUN mkdir /usr/src/app
@@ -18,8 +18,8 @@ ADD package.json /usr/src/app/package.json
 #RUN rm -rf node_modules
 #RUN npm cache clear --force
 #RUN npm install npm@3.10.10
-RUN rm -rf node_modules
-RUN npm cache clear --force
+#RUN rm -rf node_modules
+#RUN npm cache clear --force
 RUN npm install react react-dom react-scripts web-service -g --silent
 RUN npm install pushstate-server -g --silent
 

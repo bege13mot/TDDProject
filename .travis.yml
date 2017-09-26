@@ -19,7 +19,7 @@ services:
 
 env:
   global:
-    - DOCKER_COMPOSE_VERSION=1.11.2
+    - DOCKER_COMPOSE_VERSION=1.14.0
 
 before_install:
   - sudo rm /usr/local/bin/docker-compose
