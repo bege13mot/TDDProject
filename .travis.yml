@@ -43,8 +43,8 @@ before_script:
   - cd ./flask-microservices-main
   - fluxbox >/dev/null 2>&1 &
   - npm install --silent
-  #- bash ./docker_build.sh
-  - docker-compose up -d --build
+  - bash ./docker_build.sh
+  #- docker-compose up -d --build
 
 script:
   - docker-compose run users-service python manage.py test
