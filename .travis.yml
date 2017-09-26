@@ -21,7 +21,11 @@ env:
   global:
     - DOCKER_COMPOSE_VERSION=1.14.0
     - COMMIT=${TRAVIS_COMMIT::8}
-    - USERS=flask-microservices-users    
+    - USERS = flask-microservices-users
+    - USERS_DB = flask-microservices-users_db
+    - CLIENT = flask-microservices-client
+    - SWAGGER = flask-microservices-swagger
+    - NGINX = flask-microservices-nginx
 
 before_install:
   - sudo rm /usr/local/bin/docker-compose
@@ -39,7 +43,7 @@ before_script:
   - cd ./flask-microservices-main
   - fluxbox >/dev/null 2>&1 &
   - npm install
-  - docker-compose up -d --build
+  - bash ./docker_build.sh
 
 script:
   - docker-compose run users-service python manage.py test
@@ -50,10 +54,4 @@ after_script:
   - docker-compose down
 
 after_success:
-  - docker login -u $DOCKER_USER -p $DOCKER_PASS
-  - export TAG=`if [ "$TRAVIS_BRANCH" == "master" ]; then echo "latest"; else echo $TRAVIS_BRANCH ; fi`
-  # users
-  - cd ../flask-microservices-users
-  - docker build . -t $USERS:$COMMIT
-  - docker tag $USERS:$COMMIT $DOCKER_USER/$USERS:$TAG
-  - docker push $DOCKER_USER/$USERS
+  - bash ./docker_push.sh
