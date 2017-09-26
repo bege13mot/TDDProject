@@ -24,7 +24,8 @@ RUN npm install pushstate-server -g --silent
 #ENV PATH /usr/src/app/node_modules/.bin:$PATH
 
 # add app
-ADD . /usr/src/app
+COPY . /usr/src/app
+RUN ls
 
 # build react app
 RUN npm run build
