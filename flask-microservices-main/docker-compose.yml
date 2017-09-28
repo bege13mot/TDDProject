@@ -69,3 +69,12 @@ services:
     depends_on:
       users-service:
         condition: service_started
+
+  prometheus:
+      image: prom/prometheus:0.18.0
+      volumes:
+          - ./prometheus.yml:/etc/prometheus/prometheus.yml
+      command:
+          - '-config.file=/etc/prometheus/prometheus.yml'
+      ports:
+          - '9090:9090'
