@@ -4,8 +4,10 @@ services:
   users-db:
     container_name: users-db
     build: ../flask-microservices-users/project/db
-    ports:
-        - 5435:5432  # expose ports - HOST:CONTAINER
+    #ports:
+    #    - 5435:5432  # expose ports - HOST:CONTAINER
+    expose:
+      - 5432
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
@@ -15,8 +17,10 @@ services:
   users-service:
     container_name: users-service
     build: ../flask-microservices-users
-    ports:
-      - 5001:5000 # expose ports - HOST:CONTAINER
+    #ports:
+    #  - 5001:5000 # expose ports - HOST:CONTAINER
+    expose:
+      - 5000    
     environment:
       - APP_SETTINGS=project.config.DevelopmentConfig
       - DATABASE_URL=postgres://postgres:postgres@users-db:5432/users_dev
@@ -49,9 +53,11 @@ services:
       context: ../flask-microservices-client
       args:
         - NODE_ENV=development
-        - REACT_APP_USERS_SERVICE_URL=$REACT_APP_USERS_SERVICE_URL
-    ports:
-      - '9000:9000' # expose ports - HOST:CONTAINER
+        - REACT_APP_USERS_SERVICE_URL=127.0.0.1 #$REACT_APP_USERS_SERVICE_URL
+    #ports:
+    #  - '9000:9000' # expose ports - HOST:CONTAINER
+    expose:
+      - 9000
     depends_on:
       users-service:
         condition: service_started
@@ -71,10 +77,66 @@ services:
         condition: service_started
 
   prometheus:
-      image: prom/prometheus:0.18.0
-      volumes:
-          - ./prometheus.yml:/etc/prometheus/prometheus.yml
-      command:
-          - '-config.file=/etc/prometheus/prometheus.yml'
-      ports:
-          - '9090:9090'
+    build: ./prometheus
+    volumes:
+        - prometheus_data:/prometheus
+    command:
+        - '-config.file=/etc/prometheus/prometheus.yml'
+        - '-storage.local.memory-chunks=100000'
+    ports:
+        - '9090:9090'
+
+  node-exporter:
+    image: prom/node-exporter:0.12.0
+    expose:
+      - 9100
+    #volumes:
+      #- /proc:/host/proc:ro
+      #- /sys:/host/sys:ro
+      #- /:/rootfs:ro
+    #command:
+      #- '-collector.procfs=/host/proc'
+      #- '-collector.sysfs=/host/sys'
+      #- '-collector.filesystem.ignored-mount-points=^/(sys|proc|dev|host|etc)($$|/)'
+
+  #cadvisor:
+    #image: google/cadvisor:v0.26.1    
+    #volumes:
+      #- /:/rootfs:ro
+      #- /var/run:/var/run:rw
+      #- /sys:/sys:ro
+      #- /var/lib/docker/:/var/lib/docker:ro    
+    #expose:
+    #- 9200
+
+  postgres-exporter:
+    image: wrouesnel/postgres_exporter
+    expose:
+      - 9187
+    environment:
+      DATA_SOURCE_NAME: 'postgres://postgres:postgres@users-db:5432/?sslmode=disable'
+    depends_on:      
+      - users-db
+  
+  nginx-exporter:
+    image: fish/nginx-exporter    
+    expose:
+      - 9113
+    command:
+      - '-nginx.scrape_uri=http://nginx:80/nginx_status'
+    depends_on:      
+      - nginx  
+        
+  grafana:
+    image: grafana/grafana:4.5.0
+    environment:
+        - GF_SECURITY_ADMIN_PASSWORD=pass
+    volumes:
+        - grafana_data:/var/lib/grafana
+    ports:
+        - '3000:3000'
+    depends_on:
+        - prometheus
+volumes:
+    prometheus_data: {}
+    grafana_data: {}
